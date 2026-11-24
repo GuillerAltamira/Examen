@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Gestión de Tesis</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <style>
+            .bg-magenta {
+                background-color: #c2185b !important;
+                color: #fff !important;
+            }
+
+            .btn-magenta {
+                background-color: #c2185b;
+                border-color: #c2185b;
+                color: #fff;
+            }
+
+                .btn-magenta:hover {
+                    background-color: #9c1248;
+                    border-color: #9c1248;
+                    color: #fff;
+                }
+
+            .text-magenta {
+                color: #c2185b !important;
+            }
+
+            .border-magenta {
+                border-color: #c2185b !important;
+            }
+
+            .table-magenta th {
+                background-color: #c2185b !important;
+                color: #fff !important;
+            }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-magenta border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand fw-bold" asp-page="/Tesis/Index">Tesis &amp; Tutores</a>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-page="/Tutores/Index">Tutores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-page="/Tesis/Index">Tesis</a>
+                        </li>
+                        @if (!string.IsNullOrWhiteSpace(Context.Session.GetString("JwtToken")))
+                        {
+                            <li class="nav-item ms-auto">
+                                <form method="post" asp-page="/Login" asp-page-handler="Logout" class="d-inline">
+                                    <button type="submit" class="btn btn-sm btn-light text-magenta fw-bold mt-1">
+                                        Cerrar sesión
+                                    </button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-page="/Login">Login</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

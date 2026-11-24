@@ -1,0 +1,103 @@
+﻿@page
+@model Web.Pages.Tesis.IndexModel
+@{
+    ViewData["Title"] = "Tesis";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-magenta mb-0">Tesis</h2>
+    <button type="button" class="btn btn-magenta" data-bs-toggle="modal" data-bs-target="#modalTesis">
+        + Agregar Tesis
+    </button>
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-9">
+        <input asp-for="Buscar" class="form-control" placeholder="Buscar tesis por título, estudiante o tutor..." />
+    </div>
+    <div class="col-md-3 d-grid">
+        <button type="submit" class="btn btn-magenta">Buscar Tesis</button>
+    </div>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Mensaje))
+{
+    <div class="alert alert-info">@Model.Mensaje</div>
+}
+
+<table class="table table-bordered table-striped align-middle table-magenta">
+    <thead>
+        <tr>
+            <th>Portada</th>
+            <th>Título</th>
+            <th>Estudiante</th>
+            <th>Estado</th>
+            <th>Tutor Asignado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in Model.ListaTesis)
+        {
+            <tr>
+                <td>
+                    @if (!string.IsNullOrWhiteSpace(t.Imagen))
+                    {
+                        <img src="@t.Imagen" alt="@t.Titulo" style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;" />
+                    }
+                </td>
+                <td>@t.Titulo</td>
+                <td>@t.Estudiante</td>
+                <td>@t.Estado</td>
+                <td>
+                    <strong>@t.TutorNombre</strong><br />
+                    <small>@t.TutorEspecialidad — @t.TutorCorreo</small>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="modalTesis" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-magenta">
+            <form method="post" enctype="multipart/form-data">
+                <div class="modal-header bg-magenta">
+                    <h5 class="modal-title">Nueva Tesis</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Tutor (máx. 3 tesis)</label>
+                        <select asp-for="NuevaTesis.IdTutor" asp-items="Model.OpcionesTutores" class="form-select" required>
+                            <option value="">-- Selecciona un tutor --</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Título</label>
+                        <input asp-for="NuevaTesis.Titulo" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Estudiante</label>
+                        <input asp-for="NuevaTesis.Estudiante" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Estado</label>
+                        <select asp-for="NuevaTesis.Estado" class="form-select">
+                            <option value="EnCurso">EnCurso</option>
+                            <option value="Aprobada">Aprobada</option>
+                            <option value="Revision">Revision</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Imagen de portada</label>
+                        <input asp-for="ArchivoImagen" type="file" accept="image/*" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-magenta">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

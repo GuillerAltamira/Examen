@@ -1,0 +1,41 @@
+﻿@page
+@model Web.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card border-magenta shadow-sm">
+            <div class="card-header bg-magenta d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Iniciar Sesión</h4>
+                @if (Model.EstaLogueado)
+                {
+                    <form method="post" asp-page-handler="Logout" class="m-0">
+                        <button type="submit" class="btn btn-sm btn-light text-magenta fw-bold">
+                            Cerrar sesión
+                        </button>
+                    </form>
+                }
+            </div>
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(Model.ErrorMensaje))
+                {
+                    <div class="alert alert-danger">@Model.ErrorMensaje</div>
+                }
+
+                <form method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Usuario</label>
+                        <input asp-for="Credenciales.Usuario" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Contraseña</label>
+                        <input asp-for="Credenciales.Password" type="password" class="form-control" required />
+                    </div>
+                    <button type="submit" class="btn btn-magenta w-100">Ingresar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

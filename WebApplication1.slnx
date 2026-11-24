@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="Contratos/Contratos.csproj" />
+  <Project Path="Web/Web.csproj" />
+  <Project Path="WebApplication1/Api.csproj" />
+</Solution>

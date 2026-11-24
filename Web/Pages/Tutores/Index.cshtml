@@ -1,0 +1,68 @@
+﻿@page
+@model Web.Pages.Tutores.IndexModel
+@{
+    ViewData["Title"] = "Tutores";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-magenta mb-0">Tutores</h2>
+    <button type="button" class="btn btn-magenta" data-bs-toggle="modal" data-bs-target="#modalTutor">
+        + Agregar Tutor
+    </button>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Mensaje))
+{
+    <div class="alert alert-info">@Model.Mensaje</div>
+}
+
+<table class="table table-bordered table-striped table-magenta">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Especialidad</th>
+            <th>Correo</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var t in Model.Tutores)
+        {
+            <tr>
+                <td>@t.Nombre</td>
+                <td>@t.Especialidad</td>
+                <td>@t.Correo</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="modalTutor" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content border-magenta">
+            <form method="post">
+                <div class="modal-header bg-magenta">
+                    <h5 class="modal-title">Nuevo Tutor</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre</label>
+                        <input asp-for="NuevoTutor.Nombre" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Especialidad</label>
+                        <input asp-for="NuevoTutor.Especialidad" class="form-control" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Correo</label>
+                        <input asp-for="NuevoTutor.Correo" type="email" class="form-control" required />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-magenta">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
